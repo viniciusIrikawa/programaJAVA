@@ -6,7 +6,7 @@
 package view;
 
 import java.sql.*;
-import conexao.Conectar;
+import conexao.Conectar;     //bibliotecas para a conexao
 import java.awt.Color;
 
 /**
@@ -22,9 +22,9 @@ public class Inicial extends javax.swing.JFrame {
      */
     public Inicial() {
         initComponents();
-        conexao = Conectar.conector();
-        //System.out.println(conexao);
-        if(conexao != null){
+        conexao = Conectar.conector();      //chama o metodo conector da classe Conectar
+        //System.out.println(conexao);      //printa a conexao  
+        if(conexao != null){                //verifica se ha conexao 
             labelStatus.setText("Conectado"); 
             labelStatus.setForeground(Color.green);
         }

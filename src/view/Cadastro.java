@@ -32,7 +32,7 @@ public class Cadastro extends javax.swing.JFrame {
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtUsuarioCadastro.getText());
             pst.setString(2, new String(txtConfirmar.getPassword()));
-            //pst.executeUpdate();
+           
            
             if(txtUsuarioCadastro.getText().isEmpty()||txtSenhaCadastro.getPassword().length ==0 ||
             txtConfirmar.getPassword().length == 0){
@@ -40,8 +40,11 @@ public class Cadastro extends javax.swing.JFrame {
     }else{
         if (new String(txtSenhaCadastro.getPassword()).equals(new String(txtConfirmar.getPassword()))){
             JOptionPane.showMessageDialog(null, "Cadastro efetuado!");
-            pst.executeUpdate();}
-        else{
+            pst.executeUpdate();
+            TelaPrincipal tela = new TelaPrincipal();
+            tela.setVisible(true);
+            dispose();}
+            else{
             JOptionPane.showMessageDialog(null, "As senhas não coincidem!");
         }
     }         
@@ -49,7 +52,6 @@ public class Cadastro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
        
-        
     }
     /**
      * This method is called from within the constructor to initialize the form.

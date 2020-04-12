@@ -6,8 +6,8 @@
 package view;
 
 import javax.swing.JOptionPane;
-import java.sql.*;
-import conexao.Conectar;
+import java.sql.*;         
+import conexao.Conectar;      
 
 /**
  *
