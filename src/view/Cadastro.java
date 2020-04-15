@@ -26,18 +26,43 @@ public class Cadastro extends javax.swing.JFrame {
         conexao = Conectar.conector();
         //System.out.println(conexao);
     }
-    private void adicionar(){
-        String sql = "insert into dados_usuarios(login, senha)values(?,?)";
+    public String genero(){
+        String gen;
+        if(radioMasc.isSelected()){
+            return gen = "Masculino";
+        }
+        else{
+            return gen = "Feminino";
+        }
+    }
+    public String opcao(){
+        String opc;
+        if(radioMedico.isSelected()){
+            return opc = "Médico";
+        }
+        else if(radioEnfermeiro.isSelected()){
+            return opc = "Enfermeiro";
+        }
+        else {
+            return opc = "Paciente";
+        } 
+    }
+    
+    private void adicionar(){           
+        String sql = "insert into dados_usuarios(login, senha, MEP, Gênero, Email)values(?,?,?,?,?)";
         try{
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtUsuarioCadastro.getText());
             pst.setString(2, new String(txtConfirmar.getPassword()));
-           
-           
-            if(txtUsuarioCadastro.getText().isEmpty()||txtSenhaCadastro.getPassword().length ==0 ||
-            txtConfirmar.getPassword().length == 0){
-        JOptionPane.showMessageDialog(rootPane, "Há campos não preenchidos!");
-    }else{
+            pst.setString(3, opcao());
+            pst.setString(4, genero());
+            pst.setString(5, txtEmail.getText());
+            
+            if(txtUsuarioCadastro.getText().isEmpty()||txtEmail.getText().isEmpty()
+            ||txtSenhaCadastro.getPassword().length ==0 ||txtConfirmar.getPassword().length == 0 
+            || buttonGroup1.getSelection() == null  || buttonGroup2.getSelection() == null){
+                    JOptionPane.showMessageDialog(rootPane, "Há campos não preenchidos!");}    
+     else{
         if (new String(txtSenhaCadastro.getPassword()).equals(new String(txtConfirmar.getPassword()))){
             JOptionPane.showMessageDialog(null, "Cadastro efetuado!");
             pst.executeUpdate();
@@ -79,7 +104,9 @@ public class Cadastro extends javax.swing.JFrame {
         radioFem = new javax.swing.JRadioButton();
         radioMedico = new javax.swing.JRadioButton();
         radioEnfermeiro = new javax.swing.JRadioButton();
-        radioUsuario = new javax.swing.JRadioButton();
+        radioPaciente = new javax.swing.JRadioButton();
+        jLabel5 = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro");
@@ -118,13 +145,13 @@ public class Cadastro extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nome de Usuário:");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(10, 110, 130, 19);
+        jLabel2.setBounds(10, 120, 130, 30);
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Nova senha:");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(10, 140, 87, 19);
+        jLabel3.setBounds(10, 180, 87, 30);
 
         btnCadastrar.setText("Cadastrar");
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -133,7 +160,7 @@ public class Cadastro extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnCadastrar);
-        btnCadastrar.setBounds(80, 340, 100, 32);
+        btnCadastrar.setBounds(80, 420, 100, 32);
 
         btnLimpar.setText("Limpar");
         btnLimpar.addActionListener(new java.awt.event.ActionListener() {
@@ -142,11 +169,11 @@ public class Cadastro extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnLimpar);
-        btnLimpar.setBounds(200, 340, 100, 32);
+        btnLimpar.setBounds(200, 420, 100, 32);
 
         txtSenhaCadastro.setBackground(new java.awt.Color(153, 153, 153));
         jPanel1.add(txtSenhaCadastro);
-        txtSenhaCadastro.setBounds(150, 140, 230, 22);
+        txtSenhaCadastro.setBounds(150, 180, 230, 28);
 
         txtUsuarioCadastro.setBackground(new java.awt.Color(153, 153, 153));
         txtUsuarioCadastro.addActionListener(new java.awt.event.ActionListener() {
@@ -155,13 +182,14 @@ public class Cadastro extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtUsuarioCadastro);
-        txtUsuarioCadastro.setBounds(150, 106, 230, 24);
+        txtUsuarioCadastro.setBounds(150, 120, 230, 28);
+        txtUsuarioCadastro.getAccessibleContext().setAccessibleDescription("");
 
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Confirmar senha:");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(10, 170, 140, 19);
+        jLabel4.setBounds(10, 210, 140, 30);
 
         txtConfirmar.setBackground(new java.awt.Color(153, 153, 153));
         txtConfirmar.addActionListener(new java.awt.event.ActionListener() {
@@ -170,7 +198,7 @@ public class Cadastro extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtConfirmar);
-        txtConfirmar.setBounds(150, 170, 230, 22);
+        txtConfirmar.setBounds(150, 210, 230, 28);
 
         radioMasc.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup2.add(radioMasc);
@@ -182,7 +210,7 @@ public class Cadastro extends javax.swing.JFrame {
             }
         });
         jPanel1.add(radioMasc);
-        radioMasc.setBounds(10, 250, 80, 20);
+        radioMasc.setBounds(10, 320, 80, 20);
 
         radioFem.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup2.add(radioFem);
@@ -194,7 +222,7 @@ public class Cadastro extends javax.swing.JFrame {
             }
         });
         jPanel1.add(radioFem);
-        radioFem.setBounds(100, 250, 70, 20);
+        radioFem.setBounds(100, 320, 70, 20);
 
         radioMedico.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(radioMedico);
@@ -206,7 +234,7 @@ public class Cadastro extends javax.swing.JFrame {
             }
         });
         jPanel1.add(radioMedico);
-        radioMedico.setBounds(10, 210, 80, 20);
+        radioMedico.setBounds(10, 280, 80, 20);
 
         radioEnfermeiro.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(radioEnfermeiro);
@@ -218,24 +246,34 @@ public class Cadastro extends javax.swing.JFrame {
             }
         });
         jPanel1.add(radioEnfermeiro);
-        radioEnfermeiro.setBounds(100, 210, 80, 20);
+        radioEnfermeiro.setBounds(100, 280, 80, 20);
 
-        radioUsuario.setBackground(new java.awt.Color(255, 255, 255));
-        buttonGroup1.add(radioUsuario);
-        radioUsuario.setForeground(new java.awt.Color(0, 0, 0));
-        radioUsuario.setText("Usuário");
-        radioUsuario.addActionListener(new java.awt.event.ActionListener() {
+        radioPaciente.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup1.add(radioPaciente);
+        radioPaciente.setForeground(new java.awt.Color(0, 0, 0));
+        radioPaciente.setText("Paciente");
+        radioPaciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioUsuarioActionPerformed(evt);
+                radioPacienteActionPerformed(evt);
             }
         });
-        jPanel1.add(radioUsuario);
-        radioUsuario.setBounds(200, 210, 80, 20);
+        jPanel1.add(radioPaciente);
+        radioPaciente.setBounds(200, 280, 90, 20);
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("E-mail para contato:");
+        jPanel1.add(jLabel5);
+        jLabel5.setBounds(10, 150, 140, 30);
+
+        txtEmail.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.add(txtEmail);
+        txtEmail.setBounds(150, 150, 230, 28);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 400, 390);
+        jPanel1.setBounds(0, 0, 400, 470);
 
-        setSize(new java.awt.Dimension(412, 424));
+        setSize(new java.awt.Dimension(412, 502));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -264,9 +302,9 @@ public class Cadastro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_radioEnfermeiroActionPerformed
 
-    private void radioUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioUsuarioActionPerformed
+    private void radioPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPacienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_radioUsuarioActionPerformed
+    }//GEN-LAST:event_radioPacienteActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         // TODO add your handling code here:
@@ -280,16 +318,6 @@ public class Cadastro extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         adicionar();
-       /* if(txtUsuarioCadastro.getText().isEmpty()||txtSenhaCadastro.getPassword().length ==0 ||
-                txtConfirmar.getPassword().length == 0){
-            JOptionPane.showMessageDialog(rootPane, "Há campos não preenchidos!");
-        }else{
-            if (new String(txtSenhaCadastro.getPassword()).equals(new String(txtConfirmar.getPassword())))
-                JOptionPane.showMessageDialog(null, "Cadastro efetuado!");
-            else{
-                JOptionPane.showMessageDialog(null, "As senhas não coincidem!");
-            }
-        }*/
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     /**
@@ -336,14 +364,16 @@ public class Cadastro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton radioEnfermeiro;
     private javax.swing.JRadioButton radioFem;
     private javax.swing.JRadioButton radioMasc;
     private javax.swing.JRadioButton radioMedico;
-    private javax.swing.JRadioButton radioUsuario;
+    private javax.swing.JRadioButton radioPaciente;
     private javax.swing.JPasswordField txtConfirmar;
+    private javax.swing.JTextField txtEmail;
     private javax.swing.JPasswordField txtSenhaCadastro;
     private javax.swing.JTextField txtUsuarioCadastro;
     // End of variables declaration//GEN-END:variables
