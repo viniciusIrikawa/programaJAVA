@@ -11,7 +11,7 @@ import java.awt.Color;
 
 /**
  *
- * @author user
+ * @author ViniciusIrikawa
  */
 public class Inicial extends javax.swing.JFrame {
    Connection conexao = null;

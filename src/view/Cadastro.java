@@ -11,7 +11,7 @@ import conexao.Conectar;
 
 /**
  *
- * @author user
+ * @author ViniciusIrikawa
  */
 public class Cadastro extends javax.swing.JFrame {
    Connection conexao = null;
@@ -58,24 +58,24 @@ public class Cadastro extends javax.swing.JFrame {
             pst.setString(4, genero());
             pst.setString(5, txtEmail.getText());
             
-            if(txtUsuarioCadastro.getText().isEmpty()||txtEmail.getText().isEmpty()
+        if(txtUsuarioCadastro.getText().isEmpty()||txtEmail.getText().isEmpty()
             ||txtSenhaCadastro.getPassword().length ==0 ||txtConfirmar.getPassword().length == 0 
             || buttonGroup1.getSelection() == null  || buttonGroup2.getSelection() == null){
-                    JOptionPane.showMessageDialog(rootPane, "Há campos não preenchidos!");}    
-     else{
-        if (new String(txtSenhaCadastro.getPassword()).equals(new String(txtConfirmar.getPassword()))){
-            JOptionPane.showMessageDialog(null, "Cadastro efetuado!");
-            pst.executeUpdate();
-            TelaPrincipal tela = new TelaPrincipal();
-            tela.setVisible(true);
-            dispose();}
-            else{
-            JOptionPane.showMessageDialog(null, "As senhas não coincidem!");
-        }
-    }         
-        }catch (Exception e){
-            JOptionPane.showMessageDialog(null, e);
-        }
+                        JOptionPane.showMessageDialog(rootPane, "Há campos não preenchidos!");}    
+         else{
+            if (new String(txtSenhaCadastro.getPassword()).equals(new String(txtConfirmar.getPassword()))){
+                JOptionPane.showMessageDialog(null, "Cadastro efetuado!");
+                pst.executeUpdate();
+                TelaPrincipal tela = new TelaPrincipal();
+                tela.setVisible(true);
+                dispose();}
+                else{
+                JOptionPane.showMessageDialog(null, "As senhas não coincidem!");
+            }
+            }         
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(null, e);
+            }
        
     }
     /**
@@ -92,6 +92,7 @@ public class Cadastro extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        btnVoltar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnCadastrar = new javax.swing.JButton();
@@ -121,6 +122,13 @@ public class Cadastro extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Tela de Cadastro");
 
+        btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -129,11 +137,15 @@ public class Cadastro extends javax.swing.JFrame {
                 .addGap(61, 61, 61)
                 .addComponent(jLabel1)
                 .addContainerGap(47, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addComponent(btnVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
                 .addComponent(jLabel1)
                 .addContainerGap(26, Short.MAX_VALUE))
         );
@@ -143,7 +155,7 @@ public class Cadastro extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Nome de Usuário:");
+        jLabel2.setText("Login:");
         jPanel1.add(jLabel2);
         jLabel2.setBounds(10, 120, 130, 30);
 
@@ -309,6 +321,7 @@ public class Cadastro extends javax.swing.JFrame {
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         // TODO add your handling code here:
         txtUsuarioCadastro.setText(null);
+        txtEmail.setText(null);
         txtSenhaCadastro.setText(null);
         txtConfirmar.setText(null);
         buttonGroup1.clearSelection();
@@ -319,6 +332,12 @@ public class Cadastro extends javax.swing.JFrame {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         adicionar();
     }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
+       Login voltar = new Login();
+       voltar.setVisible(true);
+       dispose();
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -358,6 +377,7 @@ public class Cadastro extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnLimpar;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JLabel jLabel1;
